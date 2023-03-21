@@ -21,6 +21,42 @@
   </head>
   <body>
     <h1>Generated text:</h1>
-    <p>{{ generated_text }}</p>
+    <p id="outputtext">{{ generated_text }}</p>
   </body>
+  <script>
+    const synth = window.speechSynthesis;
+
+    const inputTxt = document.querySelector("#outputtext");
+
+    window.onload = function() {
+        console.log(inputTxt.innerHTML);
+        speak();
+      };
+    
+    function speak() {
+      if (synth.speaking) {
+        console.error("speechSynthesis.speaking");
+        return;
+      }
+    
+      if (inputTxt.value !== "") {
+        const utterThis = new SpeechSynthesisUtterance(inputTxt.innerHTML);
+    
+        utterThis.onend = function (event) {
+          console.log("SpeechSynthesisUtterance.onend");
+        };
+    
+        utterThis.onerror = function (event) {
+          console.error("SpeechSynthesisUtterance.onerror");
+        };
+        
+
+        utterThis.voice = synth.getVoices()[1];
+        utterThis.pitch = 1;
+        utterThis.rate = 1;
+        synth.speak(utterThis);
+      }
+    }
+    
+    </script>
 </html>
