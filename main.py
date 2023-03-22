@@ -24,7 +24,7 @@ def generate_text():
     if chat_id not in chat_history:
         chat_history[chat_id] = []
 
-    tokens = prompt.count(" ") * 4
+    tokens = prompt.count(" ") * 6
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
@@ -37,5 +37,5 @@ def generate_text():
     return render_template("result.html", generated_text=generated_text, chat_history=chat_history[chat_id])
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+#if __name__ == "__main__":
+app.run(debug=False)
