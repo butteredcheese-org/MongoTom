@@ -54,7 +54,7 @@ def generate_text():
     logfile = "logs/" + current_time + ".txt"
 
     with open( logfile ,"x") as f:
-        f.write("Model: " + selected_model +'Prompt: ' + prompt + '\n' + 'Generated text: ' + generated_text)
+        f.write("Model: " + selected_model +'\n\nPrompt: ' + prompt + '\n\n' + 'Generated text: ' + generated_text)
     f.close()
 
     return render_template("result.html", generated_text=generated_text)
