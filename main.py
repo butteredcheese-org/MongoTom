@@ -43,7 +43,7 @@ def generate_text():
         temperature=0.4,
         )
         generated_text = response.choices[0].text.strip()
-
+    print("Model:", selected_model)
     print("Prompt:", prompt) 
     print("Generated text:", generated_text)
 
@@ -54,7 +54,7 @@ def generate_text():
     logfile = "logs/" + current_time + ".txt"
 
     with open( logfile ,"x") as f:
-        f.write('Prompt: ' + prompt + '\n\n' + 'Generated text: ' + generated_text)
+        f.write("Model: " + selected_model +'Prompt: ' + prompt + '\n' + 'Generated text: ' + generated_text)
     f.close()
 
     return render_template("result.html", generated_text=generated_text)
