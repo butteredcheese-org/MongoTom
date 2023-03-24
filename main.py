@@ -2,9 +2,7 @@ from flask import Flask, render_template, request
 import openai
 import os
 
-os.environ["OPENAI_API_KEY"] = "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"
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-
+openai.api_key_path = "openai_api_key.txt"
 app = Flask(__name__)
 
 chat_history = {}
