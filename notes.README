@@ -1,8 +1,0 @@
-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
-
-<form method="POST" action="/generate_text">
-      <input type="hidden" id="chat_id" name="chat_id" value="some_unique_id">
-      <label for="prompt">Enter your prompt:</label><br>
-      <input type="text" id="prompt" name="prompt"><br>
-      <input type="submit" value="Click me Bitch">
-    </form>
