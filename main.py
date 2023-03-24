@@ -16,7 +16,12 @@ def home():
 def generate_text():
     prompt = request.form["prompt"]
     chat_id = request.form.get("chat_id")  # use get() method instead
-    selected_model = request.form["gptmodel"]
+    
+    try:
+        selected_model = request.form["gptmodel"]
+    except:
+        raise Exception("No model selected!")
+    
     if chat_id is None:
         return "Chat ID is missing"  # handle missing chat ID
 
