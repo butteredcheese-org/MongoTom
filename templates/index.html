@@ -15,13 +15,11 @@
         padding: 50px;
       }
       h1 {
-        color: rgb(255, 255, 255);
-        text-align: center;
         font-size: 64px;
         font-weight: bold;
         margin-bottom: 64px;
       }
-      p {
+      p, h1, h2, h3 {
         color: #ffffff;
         text-align: center;
       }
@@ -46,11 +44,15 @@
       }
 
       .gptmodelform {
-        padding: 24px;
+        padding: 64px;
       }
       .gptmodelform label {
         color: #ffffff;
         font-size: 16px;
+      }
+
+      .gptmodelform input {
+        margin-right: 8px;
       }
     </style>
   </head>
@@ -64,10 +66,16 @@
           <button type="submit" class="btn btn-danger">Click me Bitch</button>
         </div>
         <div class="gptmodelform">
-          <input type="radio" id="gpt-3.5-turbo" name="gptmodel" value="gpt-3.5-turbo">
-          <label for="gpt-3.5-turbo">gpt-3.5-turbo</label><br>
-          <input type="radio" id="text-davinci-002" name="gptmodel" value="text-davinci-002">
-          <label for="text-davinci-002">text-davinci-002</label><br>
+
+          <h3>Model:</h3>
+          <div class="d-flex flex-row">
+            <input type="radio" id="gpt-3.5-turbo" name="gptmodel" value="gpt-3.5-turbo" checked>
+            <label for="gpt-3.5-turbo">gpt-3.5-turbo</label><br>
+          </div>
+          <div class="d-flex flex-row">
+            <input type="radio" id="text-davinci-002" name="gptmodel" value="text-davinci-002">
+            <label for="text-davinci-002">text-davinci-002</label><br>
+          </div>
         </div>
       </form>
     </div>
