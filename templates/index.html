@@ -44,16 +44,30 @@
         padding: 15px 32px;
         font-size: 16px;
       }
+
+      .gptmodelform {
+        padding: 24px;
+      }
+      .gptmodelform label {
+        color: #ffffff;
+        font-size: 16px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Chat with Mongo Tom</h1>
-      <form method="POST" action="/generate_text" class="form-inline justify-content-center">
+      <form method="POST" action="/generate_text" class="form-inline justify-content-center d-flex flex-column">
         <div class="form-group">
           <input type="hidden" id="chat_id" name="chat_id" value="some_unique_id">
           <input type="text" id="prompt" name="prompt" class="form-control mx-2">
           <button type="submit" class="btn btn-danger">Click me Bitch</button>
+        </div>
+        <div class="gptmodelform">
+          <input type="radio" id="gpt-3.5-turbo" name="gptmodel" value="gpt-3.5-turbo">
+          <label for="gpt-3.5-turbo">gpt-3.5-turbo</label><br>
+          <input type="radio" id="text-davinci-002" name="gptmodel" value="text-davinci-002">
+          <label for="text-davinci-002">text-davinci-002</label><br>
         </div>
       </form>
     </div>
