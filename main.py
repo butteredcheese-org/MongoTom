@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import openai
 import os
+from datetime import datetime
 
 openai.api_key_path = "openai_api_key.txt"
 app = Flask(__name__)
@@ -31,6 +32,19 @@ def generate_text():
         temperature=0.4,
     )
     generated_text = response.choices[0].text.strip()
+
+    print("Prompt:", prompt) 
+    print("Generated text:", generated_text)
+
+    now = datetime.now()
+
+    current_time = now.strftime("%H-%M-%S")
+
+    logfile = "logs/" + current_time + ".txt"
+
+    with open( logfile ,"x") as f:
+        f.write('Prompt: ' + prompt + '\n\n' + 'Generated text: ' + generated_text)
+    f.close()
 
     return render_template("result.html", generated_text=generated_text, chat_history=chat_history[chat_id])
 
