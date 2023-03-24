@@ -22,13 +22,13 @@ def generate_text():
     if chat_id not in chat_history:
         chat_history[chat_id] = []
 
-    tokens = prompt.count(" ") * 6
+    tokens = prompt.count(" ") * 24
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
         max_tokens=tokens,
         n=1,
-        temperature=0.3,
+        temperature=0.4,
     )
     generated_text = response.choices[0].text.strip()
 
