@@ -99,10 +99,10 @@
     <div class="container">
       <h1>Chat with Mongo Tom</h1>
 
-      <form onsubmit="sendMessage(); return false;" id="chat-form">
+      <form id="chat-form">
         <label for="message-input">Type a message</label>
         <input type="text" id="message-input" autocomplete="off">
-        <input type="submit" value="Send Message" onclick="sendMessage();">
+        <input type="submit" value="Send Message" onclick="sendMessage(event);">
         <input type="hidden" name="gptmodel" value="text-davinci-002">
 
       </form>
@@ -113,9 +113,15 @@
 
     </div>
     <script>
-function sendMessage() {
+function sendMessage(event) {
+  event.preventDefault();
   // Get the user's message from the input field
   var message = document.getElementById("message-input").value;
+
+    // Display the user's message in the chat window
+  var chatWindow = document.getElementById("chat-window");
+  chatWindow.innerHTML += "<div class='message user'>" + message + "</div>";
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 
   // Create a new XMLHttpRequest object
   var xhr = new XMLHttpRequest();
@@ -153,10 +159,6 @@ function sendMessage() {
   // Clear the input field
   document.getElementById("message-input").value = "";
 
-  // Display the user's message in the chat window
-  var chatWindow = document.getElementById("chat-window");
-  chatWindow.innerHTML += "<div class='message user'>" + message + "</div>";
-  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
     </script>
