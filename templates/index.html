@@ -10,74 +10,158 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
       body {
-        background-color: #000000;
-       
-        padding: 50px;
+        background-color: #191919;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
       }
       h1 {
-        font-size: 64px;
+        font-size: 24px;
         font-weight: bold;
-        margin-bottom: 64px;
-      }
-      p, h1, h2, h3 {
-        color: #ffffff;
+        margin: 16px 0;
         text-align: center;
+        color: #ffffff;
+      }
+      p {
+        margin: 0;
+        padding: 0;
       }
       form {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 16px 0;
+      }
+      label {
+        display: none;
+      }
+      input[type=text] {
+        border: none;
+        border-radius: 24px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        margin: 8px;
+        padding: 16px;
+        width: 100%;
+        max-width: 480px;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: #ffffff;
       }
       input[type=submit] {
         background-color: #af4c4c;
         border: none;
         color: rgb(255, 255, 255);
-        padding: 15px 32px;
+        padding: 16px 32px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        margin: 4px 2px;
+        border-radius: 24px;
+        margin: 8px;
         cursor: pointer;
+        width: 100%;
+        max-width: 480px;
       }
-      input {
-        padding: 15px 32px;
+      .chat-window {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        height: calc(100vh - 200px);
+        max-height: 480px;
+        overflow-y: scroll;
+        margin: 0;
+        padding: 16px;
+        background-color: #212121;
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+      }
+      .message {
+        border-radius: 24px;
+        padding: 12px 16px;
         font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 8px;
       }
-
-      .gptmodelform {
-        padding: 64px;
+      .user {
+        background-color: #d8d8d8;
+        align-self: flex-end;
       }
-      .gptmodelform label {
+      .bot {
+        background-color: #af4c4c;
         color: #ffffff;
-        font-size: 16px;
-      }
-
-      .gptmodelform input {
-        margin-right: 8px;
+        align-self: flex-start;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Chat with Mongo Tom</h1>
-      <form method="POST" action="/generate_text" class="form-inline justify-content-center d-flex flex-column">
-        <div class="form-group">
-          <input type="hidden" id="chat_id" name="chat_id" value="some_unique_id">
-          <input type="text" id="prompt" name="prompt" class="form-control mx-2" autocomplete="off" >
-          <button type="submit" class="btn btn-danger">Click me Bitch</button>
-        </div>
-        <div class="gptmodelform">
 
-          <h3>Model:</h3>
-          <div class="d-flex flex-row">
-            <input type="radio" id="gpt-3.5-turbo" name="gptmodel" value="gpt-3.5-turbo" checked>
-            <label for="gpt-3.5-turbo">Personality</label><br>
-          </div>
-          <div class="d-flex flex-row">
-            <input type="radio" id="text-davinci-002" name="gptmodel" value="text-davinci-002">
-            <label for="text-davinci-002">No Personality</label><br>
-          </div>
-        </div>
+      <form id="chat-form">
+        <label for="message-input">Type a message</label>
+        <input type="text" id="message-input" autocomplete="off">
+        <input type="submit" value="Send Message" onclick="sendMessage(event);">
+        <input type="hidden" name="gptmodel" value="text-davinci-002">
+
       </form>
+
+      <div class="chat-window" id="chat-window">
+       
+      </div>
+
     </div>
+    <script>
+function sendMessage(event) {
+  event.preventDefault();
+  // Get the user's message from the input field
+  var message = document.getElementById("message-input").value;
+
+    // Display the user's message in the chat window
+  var chatWindow = document.getElementById("chat-window");
+  chatWindow.innerHTML += "<div class='message user'>" + message + "</div>";
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+
+  // Create a new XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+
+  // Set the HTTP method and URL
+  xhr.open("POST", "/generate_text");
+
+  // Set the Content-Type header
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+        // Get the generated text from the response
+        var generatedText = xhr.responseText;
+
+        // Check if the generated text is empty
+        if (generatedText.trim()) {
+            // Display the chatbot's response in the chat window
+            var chatWindow = document.getElementById("chat-window");
+            chatWindow.innerHTML += "<div class='message bot'>" + generatedText + "</div>";
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+    } else {
+        console.log("Error: " + xhr.status);
+    }
+};
+
+  
+  // Create a URL-encoded string with the user's message
+  var data = "prompt=" + encodeURIComponent(message);
+
+  // Send the message to the server
+  xhr.send(data);
+
+  // Clear the input field
+  document.getElementById("message-input").value = "";
+
+}
+
+    </script>
   </body>
 </html>
