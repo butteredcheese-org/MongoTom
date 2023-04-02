@@ -13,9 +13,9 @@ def home():
 @app.route("/generate_text", methods=["POST"])
 def generate_text():
     prompt = request.form["prompt"]
-    selected_model = "text-davinci-002"
+    selected_model = "text-davinci-003"
 
-    tokens = prompt.count(" ") * 24
+    tokens = max(prompt.count(" ") * 24, 24)
     generated_text = ""
 
     response = openai.Completion.create(
@@ -24,7 +24,8 @@ def generate_text():
         max_tokens=tokens,
         n=1,
         temperature=0.4,
-    )
+)
+
     generated_text = response.choices[0].text.strip()
 
     now = datetime.now()
@@ -34,6 +35,7 @@ def generate_text():
         f.write("Model: " + selected_model +'\n\nPrompt: ' + prompt + '\n\n' + 'Generated text: ' + generated_text)
 
     return {"generated_text": generated_text}
+
 
 if __name__ == "__main__":
     app.run(debug=True)
